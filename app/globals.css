@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #0F172A;
+  --navy: #0A1628;
+  --navy-light: #1E3A5F;
+  --blue-accent: #2563EB;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-white bg-navy-900 rounded-lg transition-all duration-200 hover:bg-navy-700 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-navy-900 border border-navy-900 rounded-lg transition-all duration-200 hover:bg-navy-900 hover:text-white active:scale-[0.98];
+  }
+
+  .btn-light {
+    @apply inline-flex items-center justify-center px-6 py-3 text-sm font-semibold text-navy-900 bg-white rounded-lg transition-all duration-200 hover:bg-slate-100 active:scale-[0.98];
+  }
+
+  .section-padding {
+    @apply py-20 sm:py-28 lg:py-32;
+  }
+
+  .container-main {
+    @apply mx-auto max-w-container px-6 sm:px-10;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, #0A1628 0%, #1E3A5F 40%, #2563EB 100%);
+  }
+}
