@@ -17,7 +17,7 @@ export default function Providers({
   }
 
   if (!convex.current) {
-    return <>{children}</>;
+    return <AuthProvider>{children}</AuthProvider>;
   }
 
   return (
