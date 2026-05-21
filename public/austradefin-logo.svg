@@ -1,0 +1,24 @@
+<svg width="1600" height="260" viewBox="0 0 1600 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">AusTradeFin logo</title>
+  <desc id="desc">A horizontal AusTradeFin logo with a stacked angular SME-style icon and single-line wordmark.</desc>
+
+  <g id="brandmark" transform="translate(0 0)">
+    <path d="M52 0H280L226 44H0L52 0Z" fill="#AEB1B3"/>
+    <path d="M0 64H226L280 20V64L226 108H0V64Z" fill="#B9AEA5"/>
+    <path d="M0 128H226L280 84V128L226 172H0V128Z" fill="#625F5A"/>
+    <path d="M0 192H226L280 148V192L226 236H0V192Z" fill="#2F3D52"/>
+  </g>
+
+  <g id="wordmark" transform="translate(340 30)">
+    <text
+      x="0"
+      y="112"
+      fill="#050505"
+      font-family="Arial Black, Arial, Helvetica, sans-serif"
+      font-size="118"
+      font-weight="900"
+      letter-spacing="-2"
+    >AusTradeFin</text>
+    <line x1="4" y1="150" x2="1040" y2="150" stroke="#AEB1B3" stroke-width="6"/>
+  </g>
+</svg>

@@ -17,7 +17,7 @@ export default function PageHeader({
   children,
 }: PageHeaderProps) {
   return (
-    <section className="relative overflow-hidden bg-navy-900 text-white pt-32 pb-16 sm:pt-40 sm:pb-20">
+    <section className="relative overflow-hidden bg-navy-900 text-white pt-20 pb-16 sm:pt-24 sm:pb-20">
       <ConcentricPattern variant="dark" position="right" />
       <div className="container-main relative">
         {eyebrow && (

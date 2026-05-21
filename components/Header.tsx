@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "@/contexts/AuthContext";
@@ -31,18 +32,20 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-white border-b transition-all duration-300 ${
+      className={`relative z-50 bg-white border-b transition-all duration-300 ${
         scrolled ? "border-slate-200 shadow-sm" : "border-slate-100"
       }`}
     >
       <div className="container-main flex items-center justify-between h-16 sm:h-20">
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-xl sm:text-2xl font-serif tracking-tight text-navy-900 transition-colors group-hover:text-navy-600">
-            ATF
-          </span>
-          <span className="hidden sm:inline text-xs font-medium text-slate-500 tracking-wide uppercase">
-            Aus Trade Fin
-          </span>
+        <Link href="/" className="flex items-center group">
+          <Image
+            src="/logo.svg"
+            alt="Aus Trade Fin"
+            width={160}
+            height={36}
+            priority
+            className="h-8 sm:h-9 w-auto transition-opacity group-hover:opacity-80"
+          />
         </Link>
 
         {/* Desktop nav */}

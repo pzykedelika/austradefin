@@ -21,11 +21,11 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-navy-900 text-white min-h-screen flex items-center">
+      <section className="relative overflow-hidden bg-navy-900 text-white min-h-[calc(100vh-4rem)] sm:min-h-[calc(100vh-5rem)] flex items-center">
         <div className="absolute inset-0 bg-gradient-to-br from-navy-950 via-navy-900 to-navy-700 opacity-90" />
         <ConcentricPattern variant="dark" position="right" />
 
-        <div className="container-main relative w-full pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-40 lg:pb-28">
+        <div className="container-main relative w-full py-20 sm:py-28 lg:py-28">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
