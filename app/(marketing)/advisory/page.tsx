@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Section from "@/components/Section";
 import TeamCard from "@/components/TeamCard";
 import PageHeader from "@/components/PageHeader";
+import MotionInView from "@/components/MotionInView";
 import { teamMembers } from "@/data/team";
 
 export const metadata: Metadata = {
@@ -20,13 +21,14 @@ export default function AdvisoryPage() {
       />
 
       <Section>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {teamMembers.map((member, i) => (
-            <TeamCard key={member.name + i} member={member} index={i} />
-          ))}
-        </div>
+        <MotionInView>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {teamMembers.map((member) => (
+              <TeamCard key={member.name} member={member} />
+            ))}
+          </div>
+        </MotionInView>
       </Section>
-
     </>
   );
 }

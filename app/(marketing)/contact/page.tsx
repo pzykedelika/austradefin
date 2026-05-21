@@ -54,10 +54,13 @@ export default function ContactPage() {
       <section className="section-padding">
         <div className="container-main">
           <div className="max-w-2xl">
-            <div className="space-y-6">
-              {contactDetails.map((detail, i) => (
-                <MotionInView key={detail.label} delay={i * 0.1}>
-                  <div className="flex items-start gap-4 p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors">
+            <MotionInView>
+              <div className="space-y-6">
+                {contactDetails.map((detail) => (
+                  <div
+                    key={detail.label}
+                    className="flex items-start gap-4 p-6 rounded-xl border border-slate-200 hover:border-slate-300 transition-colors"
+                  >
                     <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-navy-900/5 flex items-center justify-center text-navy-900">
                       {detail.icon}
                     </div>
@@ -79,12 +82,12 @@ export default function ContactPage() {
                       )}
                     </div>
                   </div>
-                </MotionInView>
-              ))}
-            </div>
+                ))}
+              </div>
+            </MotionInView>
 
-            <MotionInView delay={0.3}>
-              <div className="mt-12 p-6 rounded-xl bg-slate-50 border border-slate-200">
+            <MotionInView className="mt-12">
+              <div className="p-6 rounded-xl bg-slate-50 border border-slate-200">
                 <h3 className="text-base font-semibold text-navy-900">
                   Business Hours
                 </h3>

@@ -9,11 +9,13 @@ import { caseStudies } from "@/data/caseStudies";
 import { teamMembers } from "@/data/team";
 
 const stats = [
-  { value: "$1B+", label: "Facilities Arranged" },
-  { value: "200+", label: "Transactions Completed" },
-  { value: "25+", label: "Years Experience" },
+  { value: "$2B+", label: "Facilities Arranged by Group Members" },
+  { value: "200+", label: "Transactions Completed by Group Members" },
+  { value: "100+", label: "Years Experience Across the Group" },
   { value: "40+", label: "Lender Relationships" },
 ];
+
+const pageLoadEase = [0.22, 1, 0.36, 1] as const;
 
 export default function HomePage() {
   return (
@@ -25,9 +27,9 @@ export default function HomePage() {
 
         <div className="container-main relative w-full pt-32 pb-20 sm:pt-40 sm:pb-28 lg:pt-40 lg:pb-28">
           <motion.div
-            initial={{ opacity: 0, y: 32 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: pageLoadEase }}
             className="max-w-7xl"
           >
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-blue-400 mb-4">
@@ -37,11 +39,11 @@ export default function HomePage() {
               className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-tight max-w-4xl"
               style={{ lineHeight: 1.2 }}
             >
-              Connecting Australian Businesses with Working Capital - Financing Creditors
+              Providing Australian Businesses with Working Capital - Financing Creditors
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-5xl leading-relaxed">
-              ATF is a specialist invoice financier that sources and
-              structures tailored funding programs by discounting purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other sectors.
+              ATF is a specialist invoice financing group that
+              structures funding programs by discounting purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other business sectors.
             </p>
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-light">
@@ -61,9 +63,9 @@ export default function HomePage() {
 
           {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.75, delay: 0.14, ease: pageLoadEase }}
             className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
           >
             {stats.map((stat) => (
@@ -110,36 +112,34 @@ export default function HomePage() {
         </div>
 
         <div className="container-main">
-          <div className="flex flex-wrap justify-center gap-6">
-            {teamMembers.slice(0, 5).map((member, i) => (
-              <motion.div
-                key={member.name + i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.1, ease: "easeOut" }}
-                className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-white border border-slate-200 rounded-xl p-7 flex flex-col hover:shadow-lg hover:border-slate-300 transition-all duration-300"
-              >
-                <div className="w-20 h-20 rounded-full bg-navy-900 flex items-center justify-center mb-5">
-                  <span className="text-2xl font-bold text-white">
-                    {member.name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")}
-                  </span>
+          <MotionInView>
+            <div className="flex flex-wrap justify-center gap-6">
+              {teamMembers.slice(0, 5).map((member) => (
+                <div
+                  key={member.name}
+                  className="w-full sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-white border border-slate-200 rounded-xl p-7 flex flex-col hover:shadow-lg hover:border-slate-300 transition-all duration-300"
+                >
+                  <div className="w-20 h-20 rounded-full bg-navy-900 flex items-center justify-center mb-5">
+                    <span className="text-2xl font-bold text-white">
+                      {member.name
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold text-navy-900 leading-tight">
+                    {member.name}
+                  </h3>
+                  <p className="text-sm text-blue-600 font-medium mt-1">
+                    {member.role}
+                  </p>
+                  <p className="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-line">
+                    {member.bio}
+                  </p>
                 </div>
-                <h3 className="text-lg font-semibold text-navy-900 leading-tight">
-                  {member.name}
-                </h3>
-                <p className="text-sm text-blue-600 font-medium mt-1">
-                  {member.role}
-                </p>
-                <p className="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-line">
-                  {member.bio}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </MotionInView>
         </div>
 
         <div className="container-main">
@@ -171,33 +171,48 @@ export default function HomePage() {
             <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
               The ATF Advisory Group operates with a client-first philosophy,
               combining deep market knowledge with strong lender relationships to
-              deliver optimal outcomes.
+              deliver cost-efficient outcomes to commercial businesses.
             </p>
           </MotionInView>
 
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Understand",
-                description:
-                  "We begin with a thorough assessment of your business, objectives, and funding requirements to define the right structure.",
-              },
-              {
-                step: "02",
-                title: "Structure",
-                description:
-                  "We design a tailored funding strategy and present it to our network of lenders, negotiating competitive terms on your behalf.",
-              },
-              {
-                step: "03",
-                title: "Deliver",
-                description:
-                  "We manage the process through to settlement, coordinating with all parties to ensure a smooth and timely outcome.",
-              },
-            ].map((item, i) => (
-              <MotionInView key={item.step} delay={i * 0.15}>
-                <div className="p-6 rounded-xl bg-white border border-slate-200">
+          <MotionInView className="mt-12">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+              {[
+                {
+                  step: "01",
+                  title: "Understand",
+                  description:
+                    "We begin with a thorough assessment of your business, working capital, and funding requirements to define the right structure.",
+                },
+                {
+                  step: "02",
+                  title: "Structure",
+                  description:
+                    "We develop a funding strategy and present it to our network of lenders, negotiating competitive terms on your behalf.",
+                },
+                {
+                  step: "03",
+                  title: "Deliver",
+                  description:
+                    "We manage the process through to settlement, coordinating with all parties to ensure a smooth and timely outcome.",
+                },
+                {
+                  step: "04",
+                  title: "Ongoing Service",
+                  description:
+                    "On an ongoing basis, we continue to monitor payments and settlements to ensure the funding facilities are available continuously.",
+                },
+                {
+                  step: "05",
+                  title: "Renewals",
+                  description:
+                    "Regular reviews are conducted on a pre-agreed basis to ensure the funding facilities match the growing business needs of borrowers.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.step}
+                  className="p-6 rounded-xl bg-white border border-slate-200"
+                >
                   <span className="text-4xl font-serif text-navy-900/10">
                     {item.step}
                   </span>
@@ -208,9 +223,9 @@ export default function HomePage() {
                     {item.description}
                   </p>
                 </div>
-              </MotionInView>
-            ))}
-          </div>
+              ))}
+            </div>
+          </MotionInView>
         </div>
       </section>
 
@@ -238,11 +253,13 @@ export default function HomePage() {
             </Link>
           </MotionInView>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {caseStudies.slice(0, 5).map((study, i) => (
-              <CaseStudyCard key={study.id} study={study} index={i} />
-            ))}
-          </div>
+          <MotionInView>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {caseStudies.slice(0, 5).map((study) => (
+                <CaseStudyCard key={study.id} study={study} />
+              ))}
+            </div>
+          </MotionInView>
         </div>
       </section>
 

@@ -25,7 +25,7 @@ export const caseStudies: CaseStudy[] = [
     sector: "Corporate Finance",
     summary:
       "Streamlined cashflows to ensure peaks and troughs were smoothed by discounting bills.",
-    amount: "$15M of annual volumes",
+    amount: "$14M of annual volumes",
     outcome: "Regulated cashflows and eased burden of excessive borrowing to fund deficits.",
     tags: ["Acquisition", "Private Equity", "Structured"],
   },
@@ -54,9 +54,9 @@ export const caseStudies: CaseStudy[] = [
     title: "Supermarkets",
     sector: "Trade Finance",
     summary:
-      "Provided working capital finance through discounting of invoices without disrupting any of the existing banking relationships.",
-    amount: "$12M+ of annual volumes",
-    outcome: "Enabled the company to increase their turnover by 20% because of increased working capital availability.",
+      "Provided invoice discounting facilities for suppliers in addition to existing banking relationships.",
+    amount: "$17M+ of annual volumes",
+    outcome: "Enabled the company to increase and strengthen their supplier base because of the increased facilities.",
     tags: ["Trade Finance", "Working Capital", "Import"],
   },
 ];

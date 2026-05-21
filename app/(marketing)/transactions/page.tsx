@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Section from "@/components/Section";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import PageHeader from "@/components/PageHeader";
+import MotionInView from "@/components/MotionInView";
 import { caseStudies } from "@/data/caseStudies";
 
 export const metadata: Metadata = {
@@ -21,11 +22,13 @@ export default function TransactionsPage() {
       />
 
       <Section>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {caseStudies.map((study, i) => (
-            <CaseStudyCard key={study.id} study={study} index={i} />
-          ))}
-        </div>
+        <MotionInView>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {caseStudies.map((study) => (
+              <CaseStudyCard key={study.id} study={study} />
+            ))}
+          </div>
+        </MotionInView>
       </Section>
     </>
   );

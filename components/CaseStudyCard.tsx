@@ -1,20 +1,12 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { CaseStudy } from "@/data/caseStudies";
 
 interface CaseStudyCardProps {
   study: CaseStudy;
-  index: number;
 }
 
-export default function CaseStudyCard({ study, index }: CaseStudyCardProps) {
+export default function CaseStudyCard({ study }: CaseStudyCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+    <div
       className="group bg-white border border-slate-200 rounded-xl p-6 sm:p-8 hover:shadow-lg hover:border-slate-300 transition-all duration-300"
     >
       <h3 className="text-xl sm:text-2xl font-semibold text-navy-900 mb-2 leading-tight">
@@ -37,6 +29,6 @@ export default function CaseStudyCard({ study, index }: CaseStudyCardProps) {
           {study.outcome}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }

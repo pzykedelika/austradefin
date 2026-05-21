@@ -1,20 +1,12 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { TeamMember } from "@/data/team";
 
 interface TeamCardProps {
   member: TeamMember;
-  index: number;
 }
 
-export default function TeamCard({ member, index }: TeamCardProps) {
+export default function TeamCard({ member }: TeamCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: "easeOut" }}
+    <div
       className="bg-white border border-slate-200 rounded-xl p-6 sm:p-8 hover:shadow-lg hover:border-slate-300 transition-all duration-300"
     >
       {/* Avatar placeholder */}
@@ -33,7 +25,6 @@ export default function TeamCard({ member, index }: TeamCardProps) {
       <p className="mt-4 text-sm text-slate-600 leading-relaxed whitespace-pre-line">
         {member.bio}
       </p>
-
-    </motion.div>
+    </div>
   );
 }
