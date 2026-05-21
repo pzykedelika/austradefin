@@ -5,6 +5,7 @@ interface PageHeaderProps {
   eyebrow?: string;
   title: string;
   subtitle?: string;
+  subtitleNoWrap?: boolean;
   children?: ReactNode;
 }
 
@@ -12,6 +13,7 @@ export default function PageHeader({
   eyebrow,
   title,
   subtitle,
+  subtitleNoWrap,
   children,
 }: PageHeaderProps) {
   return (
@@ -27,7 +29,11 @@ export default function PageHeader({
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-xl">
+          <p
+            className={`mt-4 text-base sm:text-lg text-slate-400 whitespace-pre-line ${
+              subtitleNoWrap ? "whitespace-nowrap" : "max-w-4xl"
+            }`}
+          >
             {subtitle}
           </p>
         )}

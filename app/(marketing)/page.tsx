@@ -40,19 +40,18 @@ export default function HomePage() {
               Connecting Australian Businesses with Working Capital - Financing Creditors
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-5xl leading-relaxed">
-              ATF is a specialist commercial loan brokerage that sources and
-              structures tailored funding programs by discounting purchases invoices for a 30 - 60 day period. We service sectors that cover property, construction,
-              wholesale trade, mining,  and general manufacturing.
+              ATF is a specialist invoice financier that sources and
+              structures tailored funding programs by discounting purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other sectors.
             </p>
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-4">
-              <Link href="/enquire" className="btn-light">
+              <Link href="/contact" className="btn-light">
                 Get in Touch
               </Link>
               <Link
-                href="/case-studies"
+                href="/transactions"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white border border-white/20 rounded-lg hover:bg-white/10 transition-all duration-200"
               >
-                View Case Studies
+                View Transactions
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
@@ -82,13 +81,13 @@ export default function HomePage() {
         <div className="container-main">
           <MotionInView className="max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-blue-600">
-              About Aus Trade Fin
+              About AusTradeFin
             </p>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-balance">
               Invoice Discounting Specialists
             </h2>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
-              Aus Trade Fin operates as a dedicated commercial loan brokerage, working with institutional banks, non-bank lenders, and private credit providers to source optimal funding structures for Australian businesses.
+              AusTradeFin works with institutional banks, non-bank lenders, and private credit providers to build optimal working capital solutions for Australian businesses.
             </p>
           </MotionInView>
         </div>
@@ -222,14 +221,14 @@ export default function HomePage() {
           <MotionInView className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16">
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">
-                Case Studies
+                Typical Examples
               </p>
               <h2 className="text-3xl sm:text-4xl font-serif tracking-tight">
-                Recent Transactions
+                Transactions
               </h2>
             </div>
             <Link
-              href="/case-studies"
+              href="/transactions"
               className="text-sm font-medium text-navy-900 hover:text-navy-600 transition-colors flex items-center gap-1.5"
             >
               View all
@@ -240,7 +239,7 @@ export default function HomePage() {
           </MotionInView>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {caseStudies.slice(0, 2).map((study, i) => (
+            {caseStudies.slice(0, 5).map((study, i) => (
               <CaseStudyCard key={study.id} study={study} index={i} />
             ))}
           </div>
@@ -260,7 +259,7 @@ export default function HomePage() {
               the right finance solution for your business.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/enquire" className="btn-light">
+              <Link href="/contact" className="btn-light">
                 Contact Us
               </Link>
               <a

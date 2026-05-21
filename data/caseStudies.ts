@@ -11,42 +11,52 @@ export interface CaseStudy {
 export const caseStudies: CaseStudy[] = [
   {
     id: "commercial-property-refinance",
-    title: "Commercial Property Refinance",
+    title: "Construction Industry",
     sector: "Property Finance",
     summary:
-      "Assisted a mid-market property group in refinancing a portfolio of commercial assets across multiple states, securing improved terms and extended tenure with a major institutional lender.",
-    amount: "$45M",
-    outcome: "Improved loan terms with a 15-year facility and reduced margin",
+      "Discounted invoices throughout the year covering goods and services of all kinds.",
+    amount: "$25M of annual volumes",
+    outcome: "Significantly improved working capital cashflows in its ongoing business dealings with its external distributors.",
     tags: ["Property", "Refinance", "Institutional"],
   },
   {
     id: "acquisition-finance",
-    title: "Business Acquisition Facility",
+    title: "Wholesaler in the Wine and Food Industry",
     sector: "Corporate Finance",
     summary:
-      "Arranged acquisition finance for a private equity-backed purchaser of a national services business, coordinating senior debt, mezzanine, and vendor finance components.",
-    amount: "$28M",
-    outcome: "Structured multi-tranche facility settled within 8 weeks",
+      "Streamlined cashflows to ensure peaks and troughs were smoothed by discounting bills.",
+    amount: "$15M of annual volumes",
+    outcome: "Regulated cashflows and eased burden of excessive borrowing to fund deficits.",
     tags: ["Acquisition", "Private Equity", "Structured"],
   },
   {
     id: "construction-finance",
-    title: "Mixed-Use Development Finance",
+    title: "Defense Industry Supplier",
     sector: "Construction & Development",
     summary:
-      "Sourced construction finance for a mixed-use residential and retail development in a metropolitan growth corridor, working with a non-bank lender to achieve competitive pricing.",
-    amount: "$62M",
-    outcome: "Full funding secured with staged drawdown facility",
+      "Assisted with funding long wait periods for repayment and thus streamlined the buying cycle.",
+    amount: "$10M+ of annual volumes",
+    outcome: "This greatly benefited suppliers and in turn the ultimate prime buyer of the company's products and services.",
     tags: ["Construction", "Development", "Non-Bank"],
   },
   {
     id: "working-capital",
-    title: "Trade Finance & Working Capital",
+    title: "SME Manufacturer",
     sector: "Trade Finance",
     summary:
-      "Established a revolving trade finance facility for an importing business, enabling improved cash flow management and supplier payment terms across international supply chains.",
-    amount: "$12M",
-    outcome: "Revolving facility with 90-day terms and flexible drawdown",
+      "Provided working capital finance through discounting of invoices without disrupting any of the existing banking relationships.",
+    amount: "$12M+ of annual volumes",
+    outcome: "Enabled the company to increase their turnover by 20% because of increased working capital availability.",
+    tags: ["Trade Finance", "Working Capital", "Import"],
+  },
+  {
+    id: "supermarkets",
+    title: "Supermarkets",
+    sector: "Trade Finance",
+    summary:
+      "Provided working capital finance through discounting of invoices without disrupting any of the existing banking relationships.",
+    amount: "$12M+ of annual volumes",
+    outcome: "Enabled the company to increase their turnover by 20% because of increased working capital availability.",
     tags: ["Trade Finance", "Working Capital", "Import"],
   },
 ];
