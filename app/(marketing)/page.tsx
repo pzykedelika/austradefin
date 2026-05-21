@@ -42,8 +42,8 @@ export default function HomePage() {
               Providing Australian Businesses with Working Capital - Financing Creditors
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-5xl leading-relaxed">
-              ATF is a specialist invoice financing group that
-              structures funding programs by discounting purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other business sectors.
+              ATF is a specialist invoice financier that
+              structures funding programs that purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other business sectors. Group members have extensive experience in banking, financing, and structuring such programs across various industries.
             </p>
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-light">
@@ -204,9 +204,9 @@ export default function HomePage() {
                 },
                 {
                   step: "05",
-                  title: "Renewals",
+                  title: "Renewal",
                   description:
-                    "Regular reviews are conducted on a pre-agreed basis to ensure the funding facilities match the growing business needs of borrowers.",
+                    "Regular reviews are conducted on a pre-agreed basis to ensure the funding facilities match the growing business of borrowers.",
                 },
               ].map((item) => (
                 <div
@@ -279,15 +279,6 @@ export default function HomePage() {
               <Link href="/contact" className="btn-light">
                 Contact Us
               </Link>
-              <a
-                href="tel:1300002026"
-                className="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
-                </svg>
-                1300 002 026
-              </a>
             </div>
           </MotionInView>
         </div>
