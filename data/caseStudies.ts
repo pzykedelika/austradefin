@@ -21,11 +21,11 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "acquisition-finance",
-    title: "Wholesaler in the Wine and Food Industry",
+    title: "Wholesaler in Shoes and Leather Goods",
     sector: "Corporate Finance",
     summary:
       "Streamlined cashflows to ensure peaks and troughs were smoothed by discounting bills.",
-    amount: "$14M of annual volumes",
+    amount: "$22M of annual volumes",
     outcome: "Regulated cashflows and eased burden of excessive borrowing to fund deficits.",
     tags: ["Acquisition", "Private Equity", "Structured"],
   },

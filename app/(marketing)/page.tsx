@@ -235,8 +235,8 @@ export default function HomePage() {
         <div className="container-main relative">
           <MotionInView className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16">
             <div className="max-w-xl">
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">
-                Typical Examples
+              <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3 whitespace-nowrap">
+                Typical Examples of some transactions completed by Advisory Group members
               </p>
               <h2 className="text-3xl sm:text-4xl font-serif tracking-tight">
                 Transactions
