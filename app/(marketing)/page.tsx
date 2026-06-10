@@ -25,21 +25,20 @@ interface ServiceProvider {
   logoHeight?: number;
   // Optional Tailwind max-height override for square/stacked logos that otherwise look small.
   logoClassName?: string;
-  url?: string;
 }
 
 const serviceProviderGroups: { category: string; providers: ServiceProvider[] }[] = [
   {
     category: "Legal",
     providers: [
-      { name: "Clayton Utz", logo: "/logos/clayton-utz.png", logoWidth: 675, logoHeight: 189, url: "http://claytonutz.com" },
-      { name: "HWLE Lawyers", logo: "/logos/hwle.webp", logoWidth: 1920, logoHeight: 802, url: "https://hwlebsworth.com.au" },
+      { name: "Clayton Utz", logo: "/logos/clayton-utz.png", logoWidth: 675, logoHeight: 189 },
+      { name: "HWLE Lawyers", logo: "/logos/hwle.webp", logoWidth: 1920, logoHeight: 802 },
       { name: "Carmel Riordan Lawyers", logo: "/logos/carmel-riordan.png", logoWidth: 510, logoHeight: 510, logoClassName: "w-24 h-28 object-fill" },
     ],
   },
   {
     category: "Accountants",
-    providers: [{ name: "BDO Australia Accountants", logo: "/logos/bdo.webp", logoWidth: 1739, logoHeight: 761, url: "https://www.bdo.com.au/en-au/home" }],
+    providers: [{ name: "BDO Australia Accountants", logo: "/logos/bdo.webp", logoWidth: 1739, logoHeight: 761 }],
   },
 ];
 
@@ -198,40 +197,31 @@ export default function HomePage() {
                   {group.category}
                 </h3>
                 <div className="flex flex-wrap justify-center gap-6">
-                  {group.providers.map((provider) => {
-                    const cardClass =
-                      "flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-8 h-32 w-full sm:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] transition-all hover:shadow-lg hover:border-slate-300";
-                    const content = provider.logo ? (
-                      <Image
-                        src={provider.logo}
-                        alt={provider.name}
-                        width={provider.logoWidth ?? 180}
-                        height={provider.logoHeight ?? 60}
-                        className={provider.logoClassName ?? "max-h-16 w-auto object-contain"}
-                      />
-                    ) : (
-                      <span className="text-center text-sm font-medium text-slate-600">
-                        {provider.name}
-                      </span>
-                    );
-
-                    return provider.url ? (
-                      <a
-                        key={provider.name}
-                        href={provider.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Visit ${provider.name} website`}
-                        className={cardClass}
-                      >
-                        {content}
-                      </a>
-                    ) : (
-                      <div key={provider.name} className={cardClass}>
-                        {content}
+                  {group.providers.map((provider) => (
+                    <div
+                      key={provider.name}
+                      className="w-full sm:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)]"
+                    >
+                      <div className="flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-8 h-32 transition-all hover:shadow-lg hover:border-slate-300">
+                        {provider.logo ? (
+                          <Image
+                            src={provider.logo}
+                            alt={provider.name}
+                            width={provider.logoWidth ?? 180}
+                            height={provider.logoHeight ?? 60}
+                            className={provider.logoClassName ?? "max-h-16 w-auto object-contain"}
+                          />
+                        ) : (
+                          <span className="text-center text-sm font-medium text-slate-600">
+                            {provider.name}
+                          </span>
+                        )}
                       </div>
-                    );
-                  })}
+                      <p className="mt-3 text-center text-sm font-medium text-slate-700">
+                        {provider.name}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </MotionInView>
             ))}
