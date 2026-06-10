@@ -1,18 +1,46 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import MotionInView from "@/components/MotionInView";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import ConcentricPattern from "@/components/ConcentricPattern";
 import { caseStudies } from "@/data/caseStudies";
-import { teamMembers } from "@/data/team";
+import { getTeamMemberInitials, teamMembers } from "@/data/team";
 
 const stats = [
   { value: "$2B+", label: "Facilities Arranged by Group Members" },
   { value: "200+", label: "Transactions Completed by Group Members" },
   { value: "100+", label: "Years Experience Across the Group" },
   { value: "40+", label: "Lender Relationships" },
+];
+
+interface ServiceProvider {
+  name: string;
+  // Drop a logo file into /public/logos and set its path here, e.g. "/logos/clayton-utz.svg"
+  logo?: string;
+  // Natural pixel dimensions of the logo, so its aspect ratio is preserved.
+  logoWidth?: number;
+  logoHeight?: number;
+  // Optional Tailwind max-height override for square/stacked logos that otherwise look small.
+  logoClassName?: string;
+  url?: string;
+}
+
+const serviceProviderGroups: { category: string; providers: ServiceProvider[] }[] = [
+  {
+    category: "Legal",
+    providers: [
+      { name: "Clayton Utz", logo: "/logos/clayton-utz.png", logoWidth: 675, logoHeight: 189, url: "http://claytonutz.com" },
+      { name: "HWLE Lawyers", logo: "/logos/hwle.webp", logoWidth: 1920, logoHeight: 802, url: "https://hwlebsworth.com.au" },
+      { name: "Carmel Riordan Lawyers", logo: "/logos/carmel-riordan.png", logoWidth: 510, logoHeight: 510, logoClassName: "w-24 h-28 object-fill" },
+    ],
+  },
+  {
+    category: "Accountants",
+    providers: [{ name: "BDO Australia Accountants", logo: "/logos/bdo.webp", logoWidth: 1739, logoHeight: 761, url: "https://www.bdo.com.au/en-au/home" }],
+  },
 ];
 
 const pageLoadEase = [0.22, 1, 0.36, 1] as const;
@@ -121,10 +149,7 @@ export default function HomePage() {
                 >
                   <div className="w-20 h-20 rounded-full bg-navy-900 flex items-center justify-center mb-5">
                     <span className="text-2xl font-bold text-white">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
+                      {getTeamMemberInitials(member.name)}
                     </span>
                   </div>
                   <h3 className="text-lg font-semibold text-navy-900 leading-tight">
@@ -154,6 +179,63 @@ export default function HomePage() {
               </svg>
             </Link>
           </MotionInView>
+        </div>
+      </section>
+
+      {/* Service Providers */}
+      <section className="section-padding bg-white text-slate-900">
+        <div className="container-main">
+          <MotionInView className="max-w-2xl mb-12 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-balance">
+              Service Providers
+            </h2>
+          </MotionInView>
+
+          <div className="space-y-12">
+            {serviceProviderGroups.map((group) => (
+              <MotionInView key={group.category}>
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-6 text-center">
+                  {group.category}
+                </h3>
+                <div className="flex flex-wrap justify-center gap-6">
+                  {group.providers.map((provider) => {
+                    const cardClass =
+                      "flex items-center justify-center rounded-lg border border-slate-200 bg-white px-6 py-8 h-32 w-full sm:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] transition-all hover:shadow-lg hover:border-slate-300";
+                    const content = provider.logo ? (
+                      <Image
+                        src={provider.logo}
+                        alt={provider.name}
+                        width={provider.logoWidth ?? 180}
+                        height={provider.logoHeight ?? 60}
+                        className={provider.logoClassName ?? "max-h-16 w-auto object-contain"}
+                      />
+                    ) : (
+                      <span className="text-center text-sm font-medium text-slate-600">
+                        {provider.name}
+                      </span>
+                    );
+
+                    return provider.url ? (
+                      <a
+                        key={provider.name}
+                        href={provider.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit ${provider.name} website`}
+                        className={cardClass}
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div key={provider.name} className={cardClass}>
+                        {content}
+                      </div>
+                    );
+                  })}
+                </div>
+              </MotionInView>
+            ))}
+          </div>
         </div>
       </section>
 

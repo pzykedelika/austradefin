@@ -1,4 +1,4 @@
-import { TeamMember } from "@/data/team";
+import { getTeamMemberInitials, TeamMember } from "@/data/team";
 
 interface TeamCardProps {
   member: TeamMember;
@@ -12,10 +12,7 @@ export default function TeamCard({ member }: TeamCardProps) {
       {/* Avatar placeholder */}
       <div className="w-16 h-16 rounded-full bg-navy-900 flex items-center justify-center mb-5">
         <span className="text-xl font-bold text-white">
-          {member.name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")}
+          {getTeamMemberInitials(member.name)}
         </span>
       </div>
 

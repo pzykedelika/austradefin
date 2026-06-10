@@ -4,6 +4,16 @@ export interface TeamMember {
   bio: string;
 }
 
+const initialsExcludedWords = new Set(["OAM"]);
+
+export function getTeamMemberInitials(name: string) {
+  return name
+    .split(" ")
+    .filter((part) => part && !initialsExcludedWords.has(part.toUpperCase()))
+    .map((part) => part[0])
+    .join("");
+}
+
 export const teamMembers: TeamMember[] = [
   {
     name: "Russell Collins OAM",
