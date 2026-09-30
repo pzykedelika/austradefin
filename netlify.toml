@@ -1,0 +1,4 @@
+[build.environment]
+  # The Convex URL is a public client-side value (NEXT_PUBLIC_*), so it is
+  # expected to appear in the build output.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_CONVEX_URL"
