@@ -1,6 +1,13 @@
 import { mutation } from "./_generated/server";
 import { v } from "convex/values";
 import bcrypt from "bcryptjs";
+import { assertAdminSecret } from "./adminGuard";
+import {
+  LOCKED_OUT_ERROR,
+  clearFailures,
+  isLockedOut,
+  recordFailure,
+} from "./loginThrottle";
 
 const BCRYPT_ROUNDS = 12;
 
@@ -31,12 +38,24 @@ export const loginClient = mutation({
     })
   ),
   handler: async (ctx, { email, password }) => {
+    const throttleKey = `client:${normalizeEmail(email)}`;
+    if (await isLockedOut(ctx, throttleKey)) {
+      return { success: false as const, error: LOCKED_OUT_ERROR };
+    }
+
     const client = await ctx.db
       .query("clientAccounts")
       .withIndex("by_email", (q) => q.eq("email", normalizeEmail(email)))
       .unique();
 
     if (!client) {
+      await recordFailure(ctx, throttleKey);
+      return { success: false as const, error: "Invalid email or password" };
+    }
+
+    const valid = bcrypt.compareSync(password, client.passwordHash);
+    if (!valid) {
+      await recordFailure(ctx, throttleKey);
       return { success: false as const, error: "Invalid email or password" };
     }
 
@@ -44,10 +63,7 @@ export const loginClient = mutation({
       return { success: false as const, error: "Account is inactive" };
     }
 
-    const valid = bcrypt.compareSync(password, client.passwordHash);
-    if (!valid) {
-      return { success: false as const, error: "Invalid email or password" };
-    }
+    await clearFailures(ctx, throttleKey);
 
     return {
       success: true as const,
@@ -55,53 +71,6 @@ export const loginClient = mutation({
       name: client.name,
       email: client.email,
     };
-  },
-});
-
-// Client self-registration
-export const signupClient = mutation({
-  args: {
-    name: v.string(),
-    email: v.string(),
-    password: v.string(),
-    phone: v.optional(v.string()),
-    company: v.optional(v.string()),
-  },
-  returns: v.union(
-    v.object({
-      success: v.literal(true),
-      clientId: v.id("clientAccounts"),
-    }),
-    v.object({
-      success: v.literal(false),
-      error: v.string(),
-    })
-  ),
-  handler: async (ctx, { name, email, password, phone, company }) => {
-    const normalizedEmail = normalizeEmail(email);
-
-    const existing = await ctx.db
-      .query("clientAccounts")
-      .withIndex("by_email", (q) => q.eq("email", normalizedEmail))
-      .unique();
-
-    if (existing) {
-      return { success: false as const, error: "An account with this email already exists" };
-    }
-
-    const passwordHash = hashPassword(password);
-
-    const clientId = await ctx.db.insert("clientAccounts", {
-      email: normalizedEmail,
-      passwordHash,
-      name,
-      phone,
-      company,
-      active: true,
-      createdAt: Date.now(),
-    });
-
-    return { success: true as const, clientId };
   },
 });
 
@@ -124,12 +93,24 @@ export const loginAdmin = mutation({
     })
   ),
   handler: async (ctx, { email, password }) => {
+    const throttleKey = `admin:${normalizeEmail(email)}`;
+    if (await isLockedOut(ctx, throttleKey)) {
+      return { success: false as const, error: LOCKED_OUT_ERROR };
+    }
+
     const admin = await ctx.db
       .query("adminAccounts")
       .withIndex("by_email", (q) => q.eq("email", normalizeEmail(email)))
       .unique();
 
     if (!admin) {
+      await recordFailure(ctx, throttleKey);
+      return { success: false as const, error: "Invalid email or password" };
+    }
+
+    const valid = bcrypt.compareSync(password, admin.passwordHash);
+    if (!valid) {
+      await recordFailure(ctx, throttleKey);
       return { success: false as const, error: "Invalid email or password" };
     }
 
@@ -137,10 +118,7 @@ export const loginAdmin = mutation({
       return { success: false as const, error: "Account is inactive" };
     }
 
-    const valid = bcrypt.compareSync(password, admin.passwordHash);
-    if (!valid) {
-      return { success: false as const, error: "Invalid email or password" };
-    }
+    await clearFailures(ctx, throttleKey);
 
     return {
       success: true as const,
@@ -154,6 +132,7 @@ export const loginAdmin = mutation({
 // Create admin account (run once to seed)
 export const createAdminAccount = mutation({
   args: {
+    adminSecret: v.string(),
     email: v.string(),
     password: v.string(),
     name: v.string(),
@@ -162,7 +141,8 @@ export const createAdminAccount = mutation({
     v.object({ success: v.literal(true), adminId: v.id("adminAccounts") }),
     v.object({ success: v.literal(false), error: v.string() })
   ),
-  handler: async (ctx, { email, password, name }) => {
+  handler: async (ctx, { adminSecret, email, password, name }) => {
+    assertAdminSecret(adminSecret);
     const normalizedEmail = normalizeEmail(email);
 
     const existing = await ctx.db
@@ -191,6 +171,7 @@ export const createAdminAccount = mutation({
 // Reset admin password by email
 export const resetAdminPassword = mutation({
   args: {
+    adminSecret: v.string(),
     email: v.string(),
     newPassword: v.string(),
   },
@@ -198,7 +179,8 @@ export const resetAdminPassword = mutation({
     v.object({ success: v.literal(true) }),
     v.object({ success: v.literal(false), error: v.string() })
   ),
-  handler: async (ctx, { email, newPassword }) => {
+  handler: async (ctx, { adminSecret, email, newPassword }) => {
+    assertAdminSecret(adminSecret);
     const admin = await ctx.db
       .query("adminAccounts")
       .withIndex("by_email", (q) => q.eq("email", normalizeEmail(email)))
@@ -216,6 +198,7 @@ export const resetAdminPassword = mutation({
 // Admin creates a client account
 export const createClientAccount = mutation({
   args: {
+    adminSecret: v.string(),
     name: v.string(),
     email: v.string(),
     password: v.string(),
@@ -226,7 +209,8 @@ export const createClientAccount = mutation({
     v.object({ success: v.literal(true), clientId: v.id("clientAccounts") }),
     v.object({ success: v.literal(false), error: v.string() })
   ),
-  handler: async (ctx, { name, email, password, phone, company }) => {
+  handler: async (ctx, { adminSecret, name, email, password, phone, company }) => {
+    assertAdminSecret(adminSecret);
     const normalizedEmail = normalizeEmail(email);
 
     const existing = await ctx.db

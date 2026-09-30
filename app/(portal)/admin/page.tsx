@@ -8,18 +8,20 @@ import { api } from "../../../convex/_generated/api";
 import { useAuth } from "../../../contexts/AuthContext";
 import type { Id } from "../../../convex/_generated/dataModel";
 import dynamic from "next/dynamic";
+import SiteAccessAdmin from "../../../components/SiteAccessAdmin";
+import { contentFields, contentDefaults } from "../../../lib/siteContentFields";
 
 const RichTextEditor = dynamic(() => import("../../../components/RichTextEditor"), {
   ssr: false,
   loading: () => <div className="h-[200px] rounded-xl border border-slate-200 bg-slate-50" />,
 });
 
-type Tab = "articles" | "flowcharts";
+type Tab = "site text" | "articles" | "flowcharts" | "site access";
 
 export default function AdminDashboardPage() {
   const router = useRouter();
   const { session, isLoading, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState<Tab>("articles");
+  const [activeTab, setActiveTab] = useState<Tab>("site text");
 
   useEffect(() => {
     if (!isLoading && (!session || session.type !== "admin")) {
@@ -63,7 +65,7 @@ export default function AdminDashboardPage() {
 
       <div className="border-b border-slate-200 bg-white">
         <div className="mx-auto flex max-w-5xl gap-0 px-6">
-          {(["articles", "flowcharts"] as Tab[]).map((tab) => (
+          {(["site text", "articles", "flowcharts", "site access"] as Tab[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -80,12 +82,153 @@ export default function AdminDashboardPage() {
       </div>
 
       <div className="mx-auto max-w-5xl px-6 py-10">
+        {activeTab === "site text" && <SiteTextAdmin />}
         {activeTab === "articles" && (
           <ArticlesAdmin adminId={session.id as Id<"adminAccounts">} adminName={session.name} />
         )}
+        {activeTab === "site access" && <SiteAccessAdmin />}
         {activeTab === "flowcharts" && (
           <FlowchartsAdmin adminId={session.id as Id<"adminAccounts">} adminName={session.name} />
         )}
+      </div>
+    </div>
+  );
+}
+
+function SiteTextAdmin() {
+  const saved = useQuery(api.siteContent.getAll);
+  const [values, setValues] = useState<Record<string, string> | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState<{ type: "ok" | "error"; text: string } | null>(null);
+
+  const savedValue = (key: string) =>
+    saved?.find((row) => row.key === key)?.value ?? contentDefaults[key];
+
+  useEffect(() => {
+    if (saved && !values) {
+      setValues(
+        Object.fromEntries(
+          contentFields.map((f) => [f.key, saved.find((row) => row.key === f.key)?.value ?? f.default])
+        )
+      );
+    }
+  }, [saved, values]);
+
+  if (!saved || !values) {
+    return <p className="text-sm text-slate-500">Loading...</p>;
+  }
+
+  const changedKeys = contentFields.filter((f) => values[f.key] !== savedValue(f.key)).map((f) => f.key);
+  const pages = Array.from(new Set(contentFields.map((f) => f.page)));
+
+  const handleSave = async () => {
+    setSaving(true);
+    setMessage(null);
+    try {
+      const res = await fetch("/api/site-content", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          values: Object.fromEntries(changedKeys.map((key) => [key, values[key]])),
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Could not save changes.");
+      }
+      setMessage({ type: "ok", text: "Saved. The changes are now live on the website." });
+    } catch (err) {
+      setMessage({ type: "error", text: err instanceof Error ? err.message : "Could not save changes." });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <div>
+      <div className="mb-8 flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-900">Website text</h2>
+          <p className="mt-1 max-w-xl text-sm text-slate-500">
+            Change the wording on the website. Edit any box, then press Save. Changes go live within a
+            few seconds. Use Reset to go back to the original wording for a box.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          {changedKeys.length > 0 && (
+            <span className="text-sm text-slate-500">
+              {changedKeys.length} unsaved {changedKeys.length === 1 ? "change" : "changes"}
+            </span>
+          )}
+          <button
+            onClick={handleSave}
+            disabled={saving || changedKeys.length === 0}
+            className="rounded-xl bg-navy-900 px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-700 disabled:opacity-50"
+          >
+            {saving ? "Saving..." : "Save changes"}
+          </button>
+        </div>
+      </div>
+
+      {message && (
+        <p
+          className={`mb-6 rounded-xl px-4 py-3 text-sm ${
+            message.type === "ok" ? "bg-green-50 text-green-800" : "bg-red-50 text-red-700"
+          }`}
+        >
+          {message.text}
+        </p>
+      )}
+
+      <div className="space-y-10">
+        {pages.map((page) => (
+          <section key={page}>
+            <h3 className="mb-4 border-b border-slate-200 pb-2 text-sm font-semibold uppercase tracking-wider text-slate-500">
+              {page}
+            </h3>
+            <div className="space-y-5">
+              {contentFields
+                .filter((f) => f.page === page)
+                .map((field) => (
+                  <div key={field.key}>
+                    <div className="mb-1 flex items-center justify-between">
+                      <label htmlFor={field.key} className="block text-sm font-medium text-slate-700">
+                        {field.label}
+                      </label>
+                      {values[field.key] !== field.default && (
+                        <button
+                          type="button"
+                          onClick={() => setValues({ ...values, [field.key]: field.default })}
+                          className="text-xs font-medium text-navy-400 hover:underline"
+                        >
+                          Reset
+                        </button>
+                      )}
+                    </div>
+                    {field.multiline ? (
+                      <textarea
+                        id={field.key}
+                        rows={3}
+                        maxLength={2000}
+                        value={values[field.key]}
+                        onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-navy-400 focus:outline-none focus:ring-1 focus:ring-navy-400"
+                      />
+                    ) : (
+                      <input
+                        id={field.key}
+                        type="text"
+                        maxLength={2000}
+                        value={values[field.key]}
+                        onChange={(e) => setValues({ ...values, [field.key]: e.target.value })}
+                        className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:border-navy-400 focus:outline-none focus:ring-1 focus:ring-navy-400"
+                      />
+                    )}
+                  </div>
+                ))}
+            </div>
+          </section>
+        ))}
       </div>
     </div>
   );

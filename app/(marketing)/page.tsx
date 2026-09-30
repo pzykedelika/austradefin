@@ -6,15 +6,9 @@ import { motion } from "framer-motion";
 import MotionInView from "@/components/MotionInView";
 import CaseStudyCard from "@/components/CaseStudyCard";
 import ConcentricPattern from "@/components/ConcentricPattern";
+import { useText } from "@/components/ContentProvider";
 import { caseStudies } from "@/data/caseStudies";
 import { getTeamMemberInitials, teamMembers } from "@/data/team";
-
-const stats = [
-  { value: "$2B+", label: "Facilities Arranged by Group Members" },
-  { value: "200+", label: "Transactions Completed by Group Members" },
-  { value: "100+", label: "Years Experience Across the Group" },
-  { value: "40+", label: "Lender Relationships" },
-];
 
 interface ServiceProvider {
   name: string;
@@ -45,6 +39,8 @@ const serviceProviderGroups: { category: string; providers: ServiceProvider[] }[
 const pageLoadEase = [0.22, 1, 0.36, 1] as const;
 
 export default function HomePage() {
+  const t = useText();
+
   return (
     <>
       {/* Hero */}
@@ -60,27 +56,26 @@ export default function HomePage() {
             className="max-w-7xl"
           >
             <p className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-blue-400 mb-4">
-              Invoice Discounting
+              {t("home.hero.eyebrow")}
             </p>
             <h1
               className="text-4xl sm:text-5xl lg:text-6xl font-serif tracking-tight max-w-4xl"
               style={{ lineHeight: 1.2 }}
             >
-              Providing Australian Businesses with Working Capital - Financing Creditors
+              {t("home.hero.title")}
             </h1>
             <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-5xl leading-relaxed">
-              ATF is a specialist invoice financier that
-              structures funding programs that purchases invoices for a 30 - 60 day period. We service property construction, retail, wholesale trade, mining, manufacturing and other business sectors. Group members have extensive experience in banking, financing, and structuring such programs across various industries.
+              {t("home.hero.body")}
             </p>
             <div className="mt-6 sm:mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-light">
-                Get in Touch
+                {t("home.hero.cta1")}
               </Link>
               <Link
                 href="/transactions"
                 className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white border border-white/20 rounded-lg hover:bg-white/10 transition-all duration-200"
               >
-                View Transactions
+                {t("home.hero.cta2")}
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                 </svg>
@@ -95,10 +90,10 @@ export default function HomePage() {
             transition={{ duration: 0.75, delay: 0.14, ease: pageLoadEase }}
             className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8"
           >
-            {stats.map((stat) => (
-              <div key={stat.label} className="border-l border-white/20 pl-5">
-                <p className="text-2xl sm:text-3xl font-serif">{stat.value}</p>
-                <p className="text-sm text-slate-400 mt-1">{stat.label}</p>
+            {[1, 2, 3, 4].map((n) => (
+              <div key={n} className="border-l border-white/20 pl-5">
+                <p className="text-2xl sm:text-3xl font-serif">{t(`home.stat${n}.value`)}</p>
+                <p className="text-sm text-slate-400 mt-1">{t(`home.stat${n}.label`)}</p>
               </div>
             ))}
           </motion.div>
@@ -110,13 +105,13 @@ export default function HomePage() {
         <div className="container-main">
           <MotionInView className="max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-blue-600">
-              About AusTradeFin
+              {t("home.about.eyebrow")}
             </p>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-balance">
-              Invoice Discounting Specialists
+              {t("home.about.title")}
             </h2>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600">
-              AusTradeFin works with institutional banks, non-bank lenders, and private credit providers to build optimal working capital solutions for Australian businesses.
+              {t("home.about.body")}
             </p>
           </MotionInView>
         </div>
@@ -127,13 +122,13 @@ export default function HomePage() {
         <div className="container-main">
           <MotionInView className="mb-12 sm:mb-16">
             <p className="text-xs font-semibold uppercase tracking-widest mb-3 text-blue-600">
-              Our Team
+              {t("home.team.eyebrow")}
             </p>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-balance">
-              Advisory Group
+              {t("home.team.title")}
             </h2>
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-600 whitespace-nowrap">
-              Our advisory group brings together decades of experience in commercial lending, credit analysis, and corporate finance.
+              {t("home.team.body")}
             </p>
           </MotionInView>
         </div>
@@ -172,7 +167,7 @@ export default function HomePage() {
               href="/advisory"
               className="text-sm font-medium text-navy-900 hover:text-navy-600 transition-colors inline-flex items-center gap-1.5"
             >
-              Meet the full team
+              {t("home.team.link")}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
@@ -186,7 +181,7 @@ export default function HomePage() {
         <div className="container-main">
           <MotionInView className="max-w-2xl mb-12 sm:mb-16">
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight text-balance">
-              Service Providers
+              {t("home.providers.title")}
             </h2>
           </MotionInView>
 
@@ -235,64 +230,31 @@ export default function HomePage() {
         <div className="container-main relative">
           <MotionInView className="max-w-5xl">
             <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3">
-              Our Approach
+              {t("home.how.eyebrow")}
             </p>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight">
-              How We Work
+              {t("home.how.title")}
             </h2>
             <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">
-              The ATF Advisory Group operates with a client-first philosophy,
-              combining deep market knowledge with strong lender relationships to
-              deliver cost-efficient outcomes to commercial businesses.
+              {t("home.how.body")}
             </p>
           </MotionInView>
 
           <MotionInView className="mt-12">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-              {[
-                {
-                  step: "01",
-                  title: "Understand",
-                  description:
-                    "We begin with a thorough assessment of your business, working capital, and funding requirements to define the right structure.",
-                },
-                {
-                  step: "02",
-                  title: "Structure",
-                  description:
-                    "We develop a funding strategy and present it to our network of lenders, negotiating competitive terms on your behalf.",
-                },
-                {
-                  step: "03",
-                  title: "Deliver",
-                  description:
-                    "We manage the process through to settlement, coordinating with all parties to ensure a smooth and timely outcome.",
-                },
-                {
-                  step: "04",
-                  title: "Ongoing Service",
-                  description:
-                    "On an ongoing basis, we continue to monitor payments and settlements to ensure the funding facilities are available continuously.",
-                },
-                {
-                  step: "05",
-                  title: "Renewal",
-                  description:
-                    "Regular reviews are conducted on a pre-agreed basis to ensure the funding facilities match the growing business of borrowers.",
-                },
-              ].map((item) => (
+              {[1, 2, 3, 4, 5].map((n) => (
                 <div
-                  key={item.step}
+                  key={n}
                   className="p-6 rounded-xl bg-white border border-slate-200"
                 >
                   <span className="text-4xl font-serif text-navy-900/10">
-                    {item.step}
+                    {String(n).padStart(2, "0")}
                   </span>
                   <h3 className="mt-2 text-lg font-semibold text-navy-900">
-                    {item.title}
+                    {t(`home.how.step${n}.title`)}
                   </h3>
                   <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                    {item.description}
+                    {t(`home.how.step${n}.description`)}
                   </p>
                 </div>
               ))}
@@ -308,17 +270,17 @@ export default function HomePage() {
           <MotionInView className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16">
             <div className="max-w-xl">
               <p className="text-xs font-semibold uppercase tracking-widest text-blue-600 mb-3 whitespace-nowrap">
-                Typical Examples of some transactions completed by Advisory Group members
+                {t("home.transactions.eyebrow")}
               </p>
               <h2 className="text-3xl sm:text-4xl font-serif tracking-tight">
-                Transactions
+                {t("home.transactions.title")}
               </h2>
             </div>
             <Link
               href="/transactions"
               className="text-sm font-medium text-navy-900 hover:text-navy-600 transition-colors flex items-center gap-1.5"
             >
-              View all
+              {t("home.transactions.link")}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
               </svg>
@@ -341,15 +303,14 @@ export default function HomePage() {
         <div className="container-main relative text-center">
           <MotionInView>
             <h2 className="text-3xl sm:text-4xl font-serif tracking-tight">
-              Ready to discuss your funding requirements?
+              {t("home.cta.title")}
             </h2>
             <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-xl mx-auto">
-              Talk with our team to explore how ATF can help structure
-              the right finance solution for your business.
+              {t("home.cta.body")}
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link href="/contact" className="btn-light">
-                Contact Us
+                {t("home.cta.button")}
               </Link>
             </div>
           </MotionInView>

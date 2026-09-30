@@ -23,6 +23,7 @@ const client = new ConvexHttpClient(CONVEX_URL);
 
 async function main() {
   const result = await client.mutation(api.auth.createAdminAccount, {
+    adminSecret: process.env.ADMIN_API_SECRET ?? "",
     email,
     password,
     name,

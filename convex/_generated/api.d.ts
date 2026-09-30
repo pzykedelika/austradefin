@@ -8,9 +8,14 @@
  * @module
  */
 
+import type * as access from "../access.js";
+import type * as adminGuard from "../adminGuard.js";
 import type * as articles from "../articles.js";
 import type * as auth from "../auth.js";
 import type * as flowcharts from "../flowcharts.js";
+import type * as loginThrottle from "../loginThrottle.js";
+import type * as siteContent from "../siteContent.js";
+import type * as users from "../users.js";
 
 import type {
   ApiFromModules,
@@ -19,9 +24,14 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  access: typeof access;
+  adminGuard: typeof adminGuard;
   articles: typeof articles;
   auth: typeof auth;
   flowcharts: typeof flowcharts;
+  loginThrottle: typeof loginThrottle;
+  siteContent: typeof siteContent;
+  users: typeof users;
 }>;
 
 /**

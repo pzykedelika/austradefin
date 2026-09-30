@@ -39,10 +39,10 @@ export default function Header() {
       <div className="container-main flex items-center justify-between h-16 sm:h-20">
         <Link href="/" className="flex items-center group">
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Aus Trade Fin"
-            width={160}
-            height={36}
+            width={1119}
+            height={239}
             priority
             className="h-8 sm:h-9 w-auto transition-opacity group-hover:opacity-80"
           />

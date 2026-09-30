@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ConcentricPattern from "./ConcentricPattern";
+import { getText } from "@/lib/siteContent.server";
 
 const footerLinks = [
   {
@@ -20,7 +21,9 @@ const footerLinks = [
   },
 ];
 
-export default function Footer() {
+export default async function Footer() {
+  const t = await getText();
+
   return (
     <footer className="relative overflow-hidden bg-navy-900 text-white">
       <ConcentricPattern variant="dark" position="left" />
@@ -32,26 +35,24 @@ export default function Footer() {
               <span className="text-2xl font-serif tracking-tight">ATF</span>
             </Link>
             <p className="mt-4 text-sm text-slate-400 max-w-sm leading-relaxed">
-              Aus Trade Fin is a specialist commercial loan brokerage connecting
-              Australian businesses with tailored funding solutions from
-              institutional and non-bank lenders.
+              {t("footer.about")}
             </p>
             <div className="mt-6 space-y-2 text-sm text-slate-400">
-              <p>26 Smith Street Walkerville, SA 5081</p>
+              <p>{t("contact.office")}</p>
               <p>
                 <a
-                  href="tel:1300002026"
+                  href={`tel:${t("contact.phone").replace(/[^\d+]/g, "")}`}
                   className="hover:text-white transition-colors"
                 >
-                  1300 002 026
+                  {t("contact.phone")}
                 </a>
               </p>
               <p>
                 <a
-                  href="mailto:funds@austradefin.com.au"
+                  href={`mailto:${t("contact.email")}`}
                   className="hover:text-white transition-colors"
                 >
-                  funds@austradefin.com.au
+                  {t("contact.email")}
                 </a>
               </p>
             </div>
@@ -86,8 +87,7 @@ export default function Footer() {
             reserved.
           </p>
           <p className="text-xs text-slate-600">
-            Australian Credit Licence holder. All finance applications are
-            subject to lender approval.
+            {t("footer.disclaimer")}
           </p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import TeamCard from "@/components/TeamCard";
 import PageHeader from "@/components/PageHeader";
 import MotionInView from "@/components/MotionInView";
 import { teamMembers } from "@/data/team";
+import { getText } from "@/lib/siteContent.server";
 
 export const metadata: Metadata = {
   title: "Advisory Group",
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
     "Meet the ATF Advisory Group - experienced professionals in commercial lending, credit analysis, and corporate finance.",
 };
 
-export default function AdvisoryPage() {
+export default async function AdvisoryPage() {
+  const t = await getText();
+
   return (
     <>
       <PageHeader
-        eyebrow="Our Team"
-        title="Advisory Group"
-        subtitle={"Our advisory group is composed of seasoned finance professionals who bring deep expertise and established networks across Australian commercial lending markets."}
+        eyebrow={t("advisory.eyebrow")}
+        title={t("advisory.title")}
+        subtitle={t("advisory.subtitle")}
       />
 
       <Section>

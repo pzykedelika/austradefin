@@ -4,6 +4,7 @@ import CaseStudyCard from "@/components/CaseStudyCard";
 import PageHeader from "@/components/PageHeader";
 import MotionInView from "@/components/MotionInView";
 import { caseStudies } from "@/data/caseStudies";
+import { getText } from "@/lib/siteContent.server";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -11,13 +12,15 @@ export const metadata: Metadata = {
     "Explore recent transactions from Aus Trade Fin across property, corporate, trade, and development finance.",
 };
 
-export default function TransactionsPage() {
+export default async function TransactionsPage() {
+  const t = await getText();
+
   return (
     <>
       <PageHeader
-        eyebrow="Typical Examples"
-        title="Transactions"
-        subtitle="A selection of transactions demonstrating the breadth of funding solutions ATF delivers for Australian businesses."
+        eyebrow={t("transactions.eyebrow")}
+        title={t("transactions.title")}
+        subtitle={t("transactions.subtitle")}
         subtitleNoWrap
       />
 
